@@ -1,0 +1,31 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd"
+                   objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+
+    <changeSet author="shashith.aravinda" id="schema.default.0.1">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="EMPLOYEE"/>
+            </not>
+        </preConditions>
+        <createTable tableName="EMPLOYEE">
+            <column autoIncrement="true" name="ID" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="FIRST_NAME" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAST_NAME" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ADDRESS_LINE_ONE" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ADDRESS_LINE_TWO" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
