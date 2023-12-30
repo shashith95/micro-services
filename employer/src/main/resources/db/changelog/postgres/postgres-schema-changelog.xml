@@ -7,10 +7,10 @@
     <changeSet author="shashith.aravinda" id="schema.default.0.1">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="EMPLOYEE"/>
+                <tableExists tableName="EMPLOYER"/>
             </not>
         </preConditions>
-        <createTable tableName="EMPLOYEE">
+        <createTable tableName="EMPLOYER">
             <column autoIncrement="true" name="ID" type="INT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
