@@ -10,7 +10,7 @@ public class Employer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ID", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "FIRST_NAME", nullable = false)
     private String firstName;
@@ -27,7 +27,7 @@ public class Employer {
     public Employer() {
     }
 
-    public Employer(Integer id, String firstName, String lastName, String addressLineOne, String addressLineTwo) {
+    public Employer(Long id, String firstName, String lastName, String addressLineOne, String addressLineTwo) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -35,24 +35,44 @@ public class Employer {
         this.addressLineTwo = addressLineTwo;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getLastName() {
         return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getAddressLineOne() {
         return addressLineOne;
     }
 
+    public void setAddressLineOne(String addressLineOne) {
+        this.addressLineOne = addressLineOne;
+    }
+
     public String getAddressLineTwo() {
         return addressLineTwo;
+    }
+
+    public void setAddressLineTwo(String addressLineTwo) {
+        this.addressLineTwo = addressLineTwo;
     }
 
     @Override

@@ -1,8 +1,10 @@
 package com.employer.service;
 
-import com.employer.model.common.ApiResponse;
-import org.springframework.http.ResponseEntity;
+import com.employer.model.entity.Employer;
+import com.employer.model.request.EmployerRequest;
 
 public interface EmployerService {
-    ResponseEntity<ApiResponse> getEmployerById(Long employerId);
+    Employer getEmployerById(Long employerId);
+
+    Employer saveOrUpdateEmployer(EmployerRequest employerRequest);
 }

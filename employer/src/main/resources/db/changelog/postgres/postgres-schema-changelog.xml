@@ -21,10 +21,10 @@
                 <constraints nullable="false"/>
             </column>
             <column name="ADDRESS_LINE_ONE" type="VARCHAR(45)">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="ADDRESS_LINE_TWO" type="VARCHAR(45)">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
         </createTable>
     </changeSet>

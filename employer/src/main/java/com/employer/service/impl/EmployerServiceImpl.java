@@ -1,19 +1,15 @@
 package com.employer.service.impl;
 
 import com.employer.exception.DataNotFoundException;
-import com.employer.model.common.ApiResponse;
 import com.employer.model.entity.Employer;
-import com.employer.model.response.EmployerResponse;
+import com.employer.model.request.EmployerRequest;
 import com.employer.repository.EmployerRepository;
 import com.employer.service.EmployerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import static com.employer.util.EntityDtoMapper.mapEntityToDto;
-import static com.employer.util.ResponseHandler.generateResponse;
+import static com.employer.util.EntityDtoMapper.mapDtoToEntity;
 
 @Service
 public class EmployerServiceImpl implements EmployerService {
@@ -25,12 +21,17 @@ public class EmployerServiceImpl implements EmployerService {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> getEmployerById(Long employerId) {
-        Employer employer = employerRepository.findById(employerId)
-                .orElseThrow(() -> new DataNotFoundException("No employer found for id: " + employerId, "1000"));
-        logger.info("Successfully retrieved employer with ID: {}", employerId);
+    public Employer getEmployerById(Long employerId) {
 
-        return generateResponse(HttpStatus.OK, "Employer Returned Successfully", "100",
-                mapEntityToDto(employer, EmployerResponse.class));
+        return employerRepository.findById(employerId)
+                .orElseThrow(() -> new DataNotFoundException("No employer found for id: " + employerId, "1000"));
+    }
+
+    @Override
+    public Employer saveOrUpdateEmployer(EmployerRequest employerRequest) {
+        Employer savedEmployer = employerRepository.save(mapDtoToEntity(employerRequest, Employer.class));
+        logger.info("Employer saved successfully with ID: {}", savedEmployer.getId());
+
+        return savedEmployer;
     }
 }

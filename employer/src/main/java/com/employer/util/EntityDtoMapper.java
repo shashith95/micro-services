@@ -10,15 +10,15 @@ public class EntityDtoMapper {
 
     }
 
-    public static <D, E> D mapEntityToDto(E entity, Class<D> dtoClass) {
-        D dto = instantiateDto(dtoClass);
-        BeanUtils.copyProperties(entity, dto);
-        return dto;
+    public static <D, E> E mapDtoToEntity(D dto, Class<E> entityClass) {
+        E entity = instantiate(entityClass);
+        BeanUtils.copyProperties(dto, entity);
+        return entity;
     }
 
-    private static <T> T instantiateDto(Class<T> dtoClass) {
+    private static <T> T instantiate(Class<T> clazz) {
         try {
-            return dtoClass.getDeclaredConstructor().newInstance();
+            return clazz.getDeclaredConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
                  InvocationTargetException e) {
             throw new RuntimeException("Failed to instantiate DTO class", e);
