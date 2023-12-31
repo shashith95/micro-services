@@ -5,11 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ResponseHandler {
 
     private ResponseHandler() {
-
     }
 
     public static ResponseEntity<ApiResponse> generateResponse(HttpStatus httpStatus,
@@ -24,5 +24,19 @@ public class ResponseHandler {
                         responseCode,
                         data,
                         new ArrayList<>()));
+    }
+
+    public static ResponseEntity<ApiResponse> generateErrorResponse(HttpStatus httpStatus,
+                                                                    String responseMessage,
+                                                                    String responseCode,
+                                                                    List<?> errorList) {
+
+        return ResponseEntity
+                .status(httpStatus)
+                .body(new ApiResponse(
+                        responseMessage,
+                        responseCode,
+                        new ArrayList<>(),
+                        errorList));
     }
 }

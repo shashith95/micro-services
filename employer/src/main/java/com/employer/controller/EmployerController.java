@@ -1,5 +1,6 @@
 package com.employer.controller;
 
+import com.employer.mapper.EntityDtoMapper;
 import com.employer.model.common.ApiResponse;
 import com.employer.model.entity.Employer;
 import com.employer.model.request.EmployerRequest;
@@ -11,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.employer.mapper.EmployeeResponseMapper.mapEntityToDto;
 import static com.employer.util.ResponseHandler.generateResponse;
 
 @RestController
@@ -19,9 +19,12 @@ import static com.employer.util.ResponseHandler.generateResponse;
 public class EmployerController {
     private static final Logger logger = LoggerFactory.getLogger(EmployerController.class);
     private final EmployerService employerService;
+    private final EntityDtoMapper entityDtoMapper;
 
-    public EmployerController(EmployerService employerService) {
+    public EmployerController(EmployerService employerService,
+                              EntityDtoMapper entityDtoMapper) {
         this.employerService = employerService;
+        this.entityDtoMapper = entityDtoMapper;
     }
 
     @GetMapping
@@ -30,7 +33,7 @@ public class EmployerController {
         Employer employer = employerService.getEmployerById(employerId);
 
         return generateResponse(HttpStatus.OK, "Employer Returned Successfully", "100",
-                mapEntityToDto(employer));
+                entityDtoMapper.employerEntityToDto(employer));
     }
 
     @RequestMapping(method = {RequestMethod.PUT, RequestMethod.POST})
@@ -38,9 +41,9 @@ public class EmployerController {
         logger.info("Save or Update employer API triggered with request body: {}", employerRequest);
         Employer employer = employerService.saveOrUpdateEmployer(employerRequest);
 
-        return generateResponse(employerRequest.employeeId().isEmpty() ? HttpStatus.CREATED : HttpStatus.OK,
-                "Employer " + (employerRequest.employeeId().isEmpty() ? "Created" : "Updated") + " Successfully",
+        return generateResponse(employerRequest.employerId().isEmpty() ? HttpStatus.CREATED : HttpStatus.OK,
+                "Employer " + (employerRequest.employerId().isEmpty() ? "Created" : "Updated") + " Successfully",
                 "100",
-                mapEntityToDto(employer));
+                entityDtoMapper.employerEntityToDto(employer));
     }
 }
