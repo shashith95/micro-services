@@ -1,6 +1,7 @@
 package com.employer.util;
 
 import com.employer.exception.DataNotFoundException;
+import com.employer.exception.GeneralException;
 import com.employer.model.common.ApiResponse;
 import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.NotReadablePropertyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.List;
 
 import static com.employer.util.ResponseHandler.generateErrorResponse;
 
+@ControllerAdvice
 public class GlobalExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
@@ -48,6 +51,9 @@ public class GlobalExceptionHandler {
         } else if (ex instanceof DataNotFoundException dataNotFoundException) {
             status = HttpStatus.NOT_FOUND;
             errorCode = dataNotFoundException.getErrorCode();
+            errorMessages.add(ex.getMessage());
+        } else if (ex instanceof GeneralException generalException) {
+            errorCode = generalException.getErrorCode();
             errorMessages.add(ex.getMessage());
         } else if (ex instanceof NotReadablePropertyException) {
             status = HttpStatus.BAD_REQUEST;
